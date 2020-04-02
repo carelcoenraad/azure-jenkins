@@ -1,0 +1,36 @@
+{
+  "name": "azure-jenkins",
+  "version": "0.0.1",
+  "description": "Demonstrate the usage of Azure in a Jenkins pipeline.",
+  "private": true,
+  "scripts": {
+    "format": "npm run lint:script -- --fix && npm run format:prettier",
+    "format:prettier": "prettier \"./**/*.{css,html,js,json,md,ts,tsx,yaml,yml}\" --write --ignore-path .gitignore",
+    "lint": "npm run lint:md && npm run lint:script",
+    "lint:md": "markdownlint *.md",
+    "lint:script": "eslint . --ignore-path .gitignore",
+    "pretest": "npm run lint",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "@azure/event-hubs": "^5.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "markdownlint-cli": "^0.22.0",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "npm test"
+    }
+  }
+}

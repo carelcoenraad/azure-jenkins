@@ -1,12 +1,14 @@
 pipeline {
     agent none
     stages {
-        stage('Version') {
+        stage('Event Hubs') {
             agent {
-                docker 'mcr.microsoft.com/azure-cli'
+                docker 'node'
             }
             steps {
-                sh 'az --version'
+                withCredentials([azureServicePrincipal('cicd')]) {
+                    sh 'node event-hubs/send.js'
+                }
             }
         }
     }
