@@ -1,5 +1,6 @@
 // https://docs.microsoft.com/en-us/azure/event-hubs/get-started-node-send-v2
 const { EventHubProducerClient } = require('@azure/event-hubs');
+require('dotenv').config();
 
 const connectionString = process.env.AZURE_EVENT_HUBS_CONNECTION_STRING;
 const eventHubName = process.env.AZURE_EVENT_HUBS_EVENT_HUB_NAME;
