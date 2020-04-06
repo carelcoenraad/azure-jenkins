@@ -6,8 +6,8 @@ const {
 } = require('@azure/storage-blob');
 require('dotenv').config();
 
-const accountName = process.env.ACCOUNT_NAME;
-const accountKey = process.env.ACCOUNT_KEY;
+const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
 
 if (!accountName) {
   console.error('Account is empty');

@@ -21,8 +21,8 @@ pipeline {
         docker 'node'
       }
       environment {
-        ACCOUNT_NAME = credentials('azure-storage-account-name')
-        ACCOUNT_KEY = credentials('azure-storage-account-key')
+        AZURE_STORAGE_ACCOUNT_NAME = credentials('azure-storage-account-name')
+        AZURE_STORAGE_ACCOUNT_KEY = credentials('azure-storage-account-key')
       }
       steps {
         sh 'npm install --production'
