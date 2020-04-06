@@ -9,11 +9,11 @@
     "lint": "npm run lint:md && npm run lint:script",
     "lint:md": "markdownlint *.md",
     "lint:script": "eslint . --ignore-path .gitignore",
-    "pretest": "npm run lint",
     "test": "npm run lint"
   },
   "dependencies": {
     "@azure/event-hubs": "^5.0.2",
+    "@azure/storage-blob": "^12.1.1",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

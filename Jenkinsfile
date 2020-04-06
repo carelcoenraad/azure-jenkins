@@ -12,8 +12,21 @@ pipeline {
       steps {
         withCredentials([azureServicePrincipal('cicd')]) {
           sh 'npm install --production'
-          sh 'node event-hubs/send.js'
+          sh 'node src/event-hubs/send.js'
         }
+      }
+    }
+    stage('Storage') {
+      agent {
+        docker 'node'
+      }
+      environment {
+        ACCOUNT_NAME = credentials('azure-storage-account-name')
+        ACCOUNT_KEY = credentials('azure-storage-account-key')
+      }
+      steps {
+        sh 'npm install --production'
+        sh 'node src/storage/blob.js'
       }
     }
   }
