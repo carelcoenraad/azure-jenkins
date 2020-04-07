@@ -23,6 +23,7 @@ AZURE_EVENT_HUBS_EVENT_HUB_NAME=
 # Storage
 AZURE_STORAGE_ACCOUNT_NAME=
 AZURE_STORAGE_ACCOUNT_KEY=
+AZURE_STORAGE_CONTAINER_NAME=
 ```
 
 ### Running
@@ -72,6 +73,22 @@ Run the following to execute commands in a running Jenkins container
 ```bash
 docker container exec -it jenkins bash
 ```
+
+### Credentials
+
+The job for this project requires the following credential ids to be configured:
+
+- azure-event-hubs-connection-string
+- azure-event-hubs-event-hub-name-acc
+- azure-event-hubs-event-hub-name-dev
+- azure-event-hubs-event-hub-name-prd
+- azure-event-hubs-event-hub-name-tst
+- azure-storage-account-key
+- azure-storage-account-name
+- azure-storage-container-name-acc
+- azure-storage-container-name-dev
+- azure-storage-container-name-prd
+- azure-storage-container-name-tst
 
 ### Plug-ins
 

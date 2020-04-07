@@ -8,13 +8,18 @@ require('dotenv').config();
 
 const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
 const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
+const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
 
 if (!accountName) {
-  console.error('Account is empty');
+  console.error('Account name is empty');
 }
 
 if (!accountKey) {
   console.error('Account key is empty');
+}
+
+if (!containerName) {
+  console.error('Container name is empty');
 }
 
 async function main() {
@@ -22,29 +27,15 @@ async function main() {
     accountName,
     accountKey
   );
-
   const blobServiceClient = new BlobServiceClient(
     `https://${accountName}.blob.core.windows.net`,
     sharedKeyCredential
   );
-
-  // List containers
-  for await (const container of blobServiceClient.listContainers()) {
-    console.log(`Container: ${container.name}`);
-  }
-
-  // Create a container
-  const containerName = `container${new Date().getTime()}`;
   const containerClient = blobServiceClient.getContainerClient(containerName);
-  const createContainerResponse = await containerClient.create();
-  console.log(
-    `Created container ${containerName} successfully`,
-    createContainerResponse.requestId
-  );
 
   // Create a blob
-  const content = 'hello';
-  const blobName = `blob${new Date().getTime()}`;
+  const content = `Hello from ${containerName}`;
+  const blobName = `${containerName}${new Date().getTime()}`;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
   const uploadBlobResponse = await blockBlobClient.upload(
     content,
