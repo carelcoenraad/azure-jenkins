@@ -1,6 +1,9 @@
-// TODO: Add failure notifications
 pipeline {
   agent none
+  options {
+    parallelsAlwaysFailFast()
+    timeout(time: 60, unit: 'MINUTES')
+  }
   stages {
     stage('Install') {
       agent {
@@ -11,7 +14,7 @@ pipeline {
         stash includes: 'node_modules/**', name: 'node_modules'
       }
     }
-    stage('Deploy to dev') {
+    stage('Deploy dev') {
       parallel {
         stage('Send events') {
           agent {
@@ -42,8 +45,12 @@ pipeline {
         }
       }
     }
-    // TODO: Add Validate dev stage
-    stage('Deploy to tst') {
+    stage('Validate dev') {
+      steps {
+        input message: 'Was the dev deployment successful?'
+      }
+    }
+    stage('Deploy tst') {
       parallel {
         stage('Send events') {
           agent {
@@ -74,8 +81,12 @@ pipeline {
         }
       }
     }
-    // TODO: Add Validate tst stage
-    stage('Deploy to acc') {
+    stage('Validate tst') {
+      steps {
+        input message: 'Was the tst deployment successful?'
+      }
+    }
+    stage('Deploy acc') {
       parallel {
         stage('Send events') {
           agent {
@@ -106,8 +117,12 @@ pipeline {
         }
       }
     }
-    // TODO: Add Validate acc stage
-    stage('Deploy to prd') {
+    stage('Validate acc') {
+      steps {
+        input message: 'Was the acc deployment successful?'
+      }
+    }
+    stage('Deploy prd') {
       parallel {
         stage('Send events') {
           agent {
@@ -138,6 +153,17 @@ pipeline {
         }
       }
     }
-    // TODO: Add Validate prd stage
+    stage('Validate prd') {
+      steps {
+        input message: 'Was the prd deployment successful?'
+      }
+    }
+  }
+  post {
+    failure {
+      // https://jenkins.io/doc/pipeline/tour/post/
+      // http://localhost:49001/pipeline-syntax/globals
+      echo 'Something failed. Could send a notification with information now.'
+    }
   }
 }
