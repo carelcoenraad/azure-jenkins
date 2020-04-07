@@ -14,6 +14,19 @@ pipeline {
         stash includes: 'node_modules/**', name: 'node_modules'
       }
     }
+    stage('Test') {
+      parallel {
+        stage('Validate JSON') {
+          agent {
+            docker 'node'
+          }
+          steps {
+            unstash 'node_modules'
+            sh 'node src/json/validate.js'
+          }
+        }
+      }
+    }
     stage('Deploy dev') {
       parallel {
         stage('Send events') {
@@ -43,11 +56,6 @@ pipeline {
             sh 'node src/storage/blob.js'
           }
         }
-      }
-    }
-    stage('Validate dev') {
-      steps {
-        input message: 'Was the dev deployment successful?'
       }
     }
     stage('Deploy tst') {
