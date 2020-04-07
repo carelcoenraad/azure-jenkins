@@ -1,6 +1,7 @@
 {
   "array": ["1", "2"],
   "boolean": true,
+  "null": null,
   "number": 3.14,
   "string": "string"
 }
