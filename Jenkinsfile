@@ -131,6 +131,9 @@ pipeline {
       }
     }
     stage('Deploy prd') {
+      when {
+        branch 'master'
+      }
       parallel {
         stage('Send events') {
           agent {
@@ -162,6 +165,9 @@ pipeline {
       }
     }
     stage('Validate prd') {
+      when {
+        branch 'master'
+      }
       steps {
         input message: 'Was the prd deployment successful?'
       }
